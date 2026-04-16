@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP Muhammadiyah Loa Kulu - Sekolah Modern & Islami</title>
+    <meta name="google-site-verification" content="ec34_Ddatwg96jCmFivvwsqtJocjJOf3Bj_rHRRG60o" />
+    <meta name="keywords" content="smpmuhlk, smp muhammadiyah loa kulu, sekolah loa kulu">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co.com/CKdwjL1x/download.jpg">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #047857;
+        }
+        
+        #lightbox {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        #lightbox.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #lightbox:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #lightbox-img {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .animate-slow-zoom {
+            animation: slowZoom 20s linear infinite alternate;
+        }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        #ppdbModal, #loginModal, #adminTeacherModal, #adminGalleryModal {
+            transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        #ppdbModal.modal-open, #loginModal.modal-open, #adminTeacherModal.modal-open, #adminGalleryModal.modal-open {
+            visibility: visible;
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        #ppdbModal .modal-backdrop, #loginModal .modal-backdrop, #adminTeacherModal .modal-backdrop, #adminGalleryModal .modal-backdrop {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #ppdbModal.modal-open .modal-backdrop, #loginModal.modal-open .modal-backdrop, #adminTeacherModal.modal-open .modal-backdrop, #adminGalleryModal.modal-open .modal-backdrop {
+            opacity: 1;
+        }
+
+        #ppdbModal .modal-card-scale, #loginModal .modal-card-scale, #adminTeacherModal .modal-card-scale, #adminGalleryModal .modal-card-scale {
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+        #ppdbModal.modal-open .modal-card-scale, #loginModal.modal-open .modal-card-scale, #adminTeacherModal.modal-open .modal-card-scale, #adminGalleryModal.modal-open .modal-card-scale {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-stagger {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #ppdbModal.modal-open .modal-stagger, #loginModal.modal-open .modal-stagger, #adminTeacherModal.modal-open .modal-stagger, #adminGalleryModal.modal-open .modal-stagger {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ADMIN STYLES */
+        .admin-only {
+            display: none !important;
+        }
+        body.admin-mode .admin-only {
+            display: flex !important;
+        }
+        .admin-delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 20;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+        .admin-delete-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="100">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="https://i.ibb.co.com/kVtbLHJ4/download.jpg" alt="Logo SMP Muhammadiyah Loa Kulu" class="h-12 w-12 rounded-full object-cover shadow-md group-hover:scale-105 transition-transform border-2 border-white">
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold text-emerald-800 leading-tight drop-shadow-sm group-hover:text-emerald-600 transition-colors">SMP Muhammadiyah</span>
+                    <span class="text-xs font-medium text-emerald-600 tracking-wider">LOA KULU</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#beranda" class="text-gray-700 hover:text-emerald-600 font-medium transition-colors">Beranda</a>
+                <a href="#profil" class="text-gray-700 hover:text-emerald-600 font-medium transition-colors">Profil</a>
+                <a href="#guru" class="text-gray-700 hover:text-emerald-600 font-medium transition-colors">Guru & Staff</a>
+                <a href="#pendaftaran-langsung" class="text-gray-700 hover:text-emerald-600 font-medium transition-colors">PPDB</a>
+                <a href="#galeri" class="text-gray-700 hover:text-emerald-600 font-medium transition-colors">Galeri</a>
+                
+                <div class="flex items-center gap-4 ml-2 border-l border-gray-300 pl-6">
+                    <button id="loginBtnNav" onclick="openLoginModal()" class="text-emerald-700 hover:text-emerald-500 font-bold transition-colors">Masuk</button>
+                    
+                    <!-- User Profile Display (Hidden by default) -->
+                    <div id="userProfileNav" class="hidden flex items-center gap-3">
+                        <img id="userAvatarDisplay" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-emerald-500 object-cover">
+                        <span id="userNameDisplay" class="font-bold text-emerald-800 text-sm"></span>
+                        <button onclick="handleLogout()" class="text-red-500 hover:text-red-700 text-sm ml-2 font-medium">Logout</button>
+                    </div>
+
+                    <button onclick="openModal()" class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-6 rounded-full shadow-lg transform hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center gap-2">
+                        <span>Daftar Sekarang</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-emerald-800 focus:outline-none bg-white/80 p-2 rounded-lg backdrop-blur-sm">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white absolute w-full shadow-xl border-t border-gray-100">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#beranda" class="text-gray-700 hover:text-emerald-600 font-medium">Beranda</a>
+                <a href="#profil" class="text-gray-700 hover:text-emerald-600 font-medium">Profil</a>
+                <a href="#guru" class="text-gray-700 hover:text-emerald-600 font-medium">Guru & Staff</a>
+                <a href="#pendaftaran-langsung" class="text-gray-700 hover:text-emerald-600 font-medium">PPDB</a>
+                <a href="#galeri" class="text-gray-700 hover:text-emerald-600 font-medium">Galeri</a>
+                <hr class="border-gray-100">
+                <button id="loginBtnMobile" onclick="openLoginModal()" class="border-2 border-emerald-600 text-emerald-700 font-bold py-2 px-4 rounded-lg w-full text-center hover:bg-emerald-50 transition-colors">
+                    Masuk Akun
+                </button>
+                <div id="userProfileMobile" class="hidden flex flex-col items-center gap-2 py-2">
+                    <img id="userAvatarMobile" src="" alt="Avatar" class="w-12 h-12 rounded-full border border-emerald-500 object-cover">
+                    <span id="userNameMobile" class="font-bold text-emerald-800"></span>
+                    <button onclick="handleLogout()" class="text-red-500 text-sm font-medium">Logout</button>
+                </div>
+                <button onclick="openModal()" class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg w-full text-center">
+                    Daftar PPDB
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://i.ibb.co.com/rGgx0bRs/unnamed.webp" alt="Gedung SMP Muhammadiyah Loa Kulu" class="w-full h-full object-cover animate-slow-zoom">
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/90 via-emerald-900/80 to-emerald-800/60 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center text-white">
+            <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="0">
+                <span class="bg-emerald-500/30 border border-emerald-400/50 backdrop-blur-sm px-4 py-1 rounded-full text-sm font-medium mb-6 inline-block shadow-lg">
+                    Penerimaan Peserta Didik Baru Telah Dibuka
+                </span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-shadow" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="200">
+                Mencetak Generasi <span class="text-yellow-400">Islami</span>, <br>
+                Cerdas & Berprestasi
+            </h1>
+
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-200 drop-shadow-md" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="400">
+                SMP Muhammadiyah Loa Kulu hadir sebagai wadah pendidikan yang mengintegrasikan nilai-nilai keislaman dengan kurikulum modern untuk masa depan yang gemilang.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-4 justify-center" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="600">
+                <button onclick="openModal()" class="bg-yellow-500 hover:bg-yellow-400 text-emerald-900 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all">
+                    Daftar Sekarang
+                </button>
+                <a href="#profil" class="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-emerald-900 font-bold py-3 px-8 rounded-full transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+                    <i data-lucide="info" class="w-5 h-5"></i>
+                    Jelajahi Profil
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white" data-aos="fade-in" data-aos-delay="1200">
+            <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </div>
+    </section>
+
+    <!-- Profil Section -->
+    <section id="profil" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 relative" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-yellow-400 rounded-full opacity-50 blur-xl"></div>
+                    <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-emerald-500 rounded-full opacity-50 blur-xl"></div>
+                    <div class="relative group cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/rGgx0bRs/unnamed.webp')">
+                        <img src="https://i.ibb.co.com/rGgx0bRs/unnamed.webp" alt="Kegiatan SMP Muhammadiyah Loa Kulu" class="relative rounded-2xl shadow-2xl w-full object-cover h-[500px] group-hover:brightness-90 transition-all">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="bg-black/50 p-3 rounded-full text-white backdrop-blur-sm">
+                                <i data-lucide="maximize-2" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-emerald-600 font-bold text-lg uppercase tracking-wide mb-2" data-aos="fade-left">Tentang Kami</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8" data-aos="fade-left" data-aos-delay="100">Visi & Misi Sekolah</h3>
+                    
+                    <div class="mb-8 p-6 bg-emerald-50 rounded-xl border-l-4 border-yellow-500 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="font-bold text-emerald-800 text-lg mb-3 flex items-center gap-2">
+                            <i data-lucide="target" class="w-5 h-5"></i> Visi
+                        </h4>
+                        <p class="text-gray-800 italic font-medium leading-relaxed">
+                            "Terwujudnya generasi muslim berkualitas, unggul dalam prestasi, berwawasan IPTEK dan berbudaya lingkungan."
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-emerald-800 text-lg mb-4 flex items-center gap-2" data-aos="fade-up" data-aos-delay="300">
+                            <i data-lucide="list-checks" class="w-5 h-5"></i> Misi
+                        </h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3" data-aos="fade-left" data-aos-delay="350">
+                                <div class="mt-1 bg-emerald-100 p-1.5 rounded-full text-emerald-600 shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-gray-600 text-sm leading-relaxed">Meningkatkan pengamalan ajaran Islam dan Akhlakul Karimah.</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-aos="fade-left" data-aos-delay="400">
+                                <div class="mt-1 bg-emerald-100 p-1.5 rounded-full text-emerald-600 shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-gray-600 text-sm leading-relaxed">Mendorong dan membantu setiap peserta didik untuk mengenali potensi dirinya.</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-aos="fade-left" data-aos-delay="450">
+                                <div class="mt-1 bg-emerald-100 p-1.5 rounded-full text-emerald-600 shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-gray-600 text-sm leading-relaxed">Meningkatkan keterampilan potensi akademik dan non-akademik.</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-aos="fade-left" data-aos-delay="500">
+                                <div class="mt-1 bg-emerald-100 p-1.5 rounded-full text-emerald-600 shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-gray-600 text-sm leading-relaxed">Menumbuhkan semangat apresiasi seni, olahraga, dan IPTEK pada seluruh warga sekolah.</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-aos="fade-left" data-aos-delay="550">
+                                <div class="mt-1 bg-emerald-100 p-1.5 rounded-full text-emerald-600 shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-gray-600 text-sm leading-relaxed">Menumbuhkan sikap pola hidup sehat dan berbudaya lingkungan.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guru Section -->
+    <section id="guru" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Tenaga Pendidik & Kependidikan</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto rounded-full"></div>
+                <p class="text-gray-600 mt-4 max-w-xl mx-auto">Guru-guru staff berdedikasi tinggi dalam membimbing siswa menuju kesuksesan.</p>
+                <button class="admin-only mx-auto mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg shadow items-center justify-center gap-2 transition" onclick="openAdminTeacherModal()">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Tambah Guru/Staf
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="teacherGrid">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="100">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/SDS7gQTM/Whats-App-Image-2026-01-19-at-15-08-20.jpg')">
+                        <img src="https://i.ibb.co.com/SDS7gQTM/Whats-App-Image-2026-01-19-at-15-08-20.jpg" alt="Moch. Arifin, M.Pd" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Moch. Arifin, M.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Plt. Kepala Sekolah</p>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="200">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/DHPtwyL5/Whats-App-Image-2026-01-19-at-15-08-17.jpg')">
+                        <img src="https://i.ibb.co.com/DHPtwyL5/Whats-App-Image-2026-01-19-at-15-08-17.jpg" alt="Reni Handayani, S.Pd" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Reni Handayani, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Operator Sekolah</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="300">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/4wGhhk6r/Whats-App-Image-2026-01-14-at-14-44-36-1.jpg')">
+                        <img src="https://i.ibb.co.com/4wGhhk6r/Whats-App-Image-2026-01-14-at-14-44-36-1.jpg" alt="Ardiana, S.Pd" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Ardiana, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Guru IPS</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="400">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/hJpMMQk1/Whats-App-Image-2026-01-14-at-14-44-37.jpg')">
+                        <img src="https://i.ibb.co.com/hJpMMQk1/Whats-App-Image-2026-01-14-at-14-44-37.jpg" alt="Dwi Fitria Lestari" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Dwi Fitria Lestari, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Bendahara Sekolah</p>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="500">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/35nrvrng/Whats-App-Image-2026-01-14-at-14-44-37.jpg')">
+                        <img src="https://i.ibb.co.com/35nrvrng/Whats-App-Image-2026-01-14-at-14-44-37.jpg" alt="Evtil Kartini" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Evril Kartiningtya, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Guru PJOK</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="600">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/JwYSd5pV/Whats-App-Image-2026-01-14-at-14-44-38.jpg')">
+                        <img src="https://i.ibb.co.com/JwYSd5pV/Whats-App-Image-2026-01-14-at-14-44-38.jpg" alt="Kartika Ahdayani" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Kartika Ahdayani, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Guru MTK</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="700">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/Kc3G4xDm/Whats-App-Image-2026-01-14-at-14-44-38-1.jpg')">
+                        <img src="https://i.ibb.co.com/Kc3G4xDm/Whats-App-Image-2026-01-14-at-14-44-38-1.jpg" alt="Nurbayah" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Nurbayah, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Guru IPA dan TIK</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative" data-aos="fade-up" data-aos-delay="800">
+                    <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                    <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('https://i.ibb.co.com/x8BTqbZC/Whats-App-Image-2026-01-14-at-14-48-49.jpg')">
+                        <img src="https://i.ibb.co.com/x8BTqbZC/Whats-App-Image-2026-01-14-at-14-48-49.jpg" alt="Nurhayati" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                             <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-gray-900">Nurhayati, S.Pd</h3>
+                        <p class="text-emerald-600 font-medium text-sm mt-1">Guru B.Indo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="pendaftaran-langsung" class="py-20 relative overflow-hidden bg-gradient-to-br from-emerald-900 to-teal-800 text-white">
+        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                <div class="w-full lg:w-1/2" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-yellow-300 text-sm font-semibold mb-6">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>Motivasi Hari Ini</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        Wujudkan Mimpimu <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">Mulai Dari Sini</span>
+                    </h2>
+                    <div class="bg-white/10 border-l-4 border-yellow-400 p-6 rounded-r-xl backdrop-blur-sm mb-8" data-aos="fade-up" data-aos-delay="300">
+                        <i data-lucide="quote" class="w-8 h-8 text-yellow-400 mb-2 opacity-50"></i>
+                        <p id="random-quote" class="text-lg md:text-xl font-medium italic text-emerald-50 leading-relaxed">
+                            "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan, Anda dapat mengubah dunia."
+                        </p>
+                        <p class="mt-4 text-sm text-emerald-200 font-bold uppercase tracking-wider">— Semangat Belajar</p>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-gray-800">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold text-emerald-800">Formulir Pendaftaran Cepat</h3>
+                            <p class="text-gray-500 text-sm">Isi data di bawah untuk terhubung langsung dengan panitia.</p>
+                        </div>
+                        <form onsubmit="sendInlineWhatsapp(event)" class="space-y-4">
+                            <div data-aos="fade-up" data-aos-delay="100">
+                                <label for="inline-nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap Siswa</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i data-lucide="user" class="h-5 w-5 text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="inline-nama" required class="block w-full pl-10 rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 py-2.5" placeholder="Nama lengkap siswa">
+                                </div>
+                            </div>
+                            <div data-aos="fade-up" data-aos-delay="200">
+                                <label for="inline-asal" class="block text-sm font-medium text-gray-700 mb-1">Asal Sekolah</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i data-lucide="school" class="h-5 w-5 text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="inline-asal" required class="block w-full pl-10 rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 py-2.5" placeholder="Asal SD/MI">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div data-aos="fade-up" data-aos-delay="300">
+                                    <label for="inline-hp" class="block text-sm font-medium text-gray-700 mb-1">No. WhatsApp</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i data-lucide="phone" class="h-5 w-5 text-gray-400"></i>
+                                        </div>
+                                        <input type="tel" id="inline-hp" required class="block w-full pl-10 rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 py-2.5" placeholder="08xxx">
+                                    </div>
+                                </div>
+                                <div data-aos="fade-up" data-aos-delay="400">
+                                    <label for="inline-alamat" class="block text-sm font-medium text-gray-700 mb-1">Domisili</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i data-lucide="map-pin" class="h-5 w-5 text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="inline-alamat" required class="block w-full pl-10 rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 py-2.5" placeholder="Kecamatan/Desa">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 text-emerald-900 font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 mt-2" data-aos="fade-up" data-aos-delay="500">
+                                <span>Kirim Data Pendaftaran</span>
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                            <p class="text-xs text-center text-gray-400 mt-2" data-aos="fade-in" data-aos-delay="600">
+                                Data akan dikirimkan langsung ke WhatsApp Panitia.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Section -->
+    <section id="galeri" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Galeri Kegiatan</h2>
+                    <p class="text-gray-600 mt-2">Dokumentasi aktivitas siswa SMP Muhammadiyah Loa Kulu.</p>
+                </div>
+                <div class="flex items-center gap-4 mt-4 md:mt-0" data-aos="fade-left">
+                    <button class="admin-only bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded shadow items-center gap-2 transition" onclick="openAdminGalleryModal()">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Foto
+                    </button>
+                    <button class="hidden md:flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700 transition-colors">
+                        Lihat Semua <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]" id="galleryGrid">
+                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl cursor-zoom-in gallery-item" data-aos="zoom-in" onclick="openLightbox('https://i.ibb.co.com/MksMp5fQ/Whats-App-Image-2026-01-14-at-14-13-38.jpg')">
+                    <button class="admin-only admin-delete-btn" onclick="event.stopPropagation(); adminDeleteElement(this)">Hapus</button>
+                    <img src="https://i.ibb.co.com/MksMp5fQ/Whats-App-Image-2026-01-14-at-14-13-38.jpg" alt="Kegiatan Siswa 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
+                        <i data-lucide="maximize-2" class="text-white w-10 h-10 mb-2"></i>
+                        <p class="text-white font-bold text-lg">Aktivitas Siswa</p>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-xl cursor-zoom-in gallery-item" data-aos="zoom-in" data-aos-delay="100" onclick="openLightbox('https://i.ibb.co.com/Xwftt0H/Whats-App-Image-2026-01-14-at-14-13-59.jpg')">
+                    <button class="admin-only admin-delete-btn" onclick="event.stopPropagation(); adminDeleteElement(this)">Hapus</button>
+                    <img src="https://i.ibb.co.com/Xwftt0H/Whats-App-Image-2026-01-14-at-14-13-59.jpg" alt="Kegiatan Siswa 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
+                        <i data-lucide="maximize-2" class="text-white w-8 h-8 mb-2"></i>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-xl cursor-zoom-in gallery-item" data-aos="zoom-in" data-aos-delay="200" onclick="openLightbox('https://i.ibb.co.com/yBZPKVx0/Whats-App-Image-2026-01-14-at-14-13-44.jpg')">
+                    <button class="admin-only admin-delete-btn" onclick="event.stopPropagation(); adminDeleteElement(this)">Hapus</button>
+                    <img src="https://i.ibb.co.com/yBZPKVx0/Whats-App-Image-2026-01-14-at-14-13-44.jpg" alt="Kegiatan Siswa 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
+                        <i data-lucide="maximize-2" class="text-white w-8 h-8 mb-2"></i>
+                    </div>
+                </div>
+                <div class="md:col-span-2 relative group overflow-hidden rounded-xl cursor-zoom-in gallery-item" data-aos="zoom-in" data-aos-delay="300" onclick="openLightbox('https://i.ibb.co.com/Lf50qTn/Whats-App-Image-2026-01-14-at-14-13-37.jpg')">
+                    <button class="admin-only admin-delete-btn" onclick="event.stopPropagation(); adminDeleteElement(this)">Hapus</button>
+                    <img src="https://i.ibb.co.com/Lf50qTn/Whats-App-Image-2026-01-14-at-14-13-37.jpg" alt="Kegiatan Siswa 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
+                        <i data-lucide="maximize-2" class="text-white w-10 h-10 mb-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-white p-1 rounded-full">
+                             <img src="https://i.ibb.co.com/kVtbLHJ4/download.jpg" alt="Logo SMP" class="w-8 h-8 rounded-full">
+                        </div>
+                        <span class="text-xl font-bold">SMP Muhammadiyah</span>
+                    </div>
+                    <p class="text-emerald-100 text-sm leading-relaxed mb-6">
+                        Jl. Muhammadiyah, Loa Kulu Kota, Kec. Loa Kulu, Kabupaten Kutai Kartanegara, Kalimantan Timur 75571.
+                        <br>Membangun generasi cerdas, berakhlak mulia, dan berwawasan global.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/share/1AhtpkdXS5/" target="_blank" class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center hover:bg-yellow-500 hover:text-emerald-900 transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="https://www.instagram.com/smp_mulk/" target="_blank" class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center hover:bg-yellow-500 hover:text-emerald-900 transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://www.youtube.com/@SMPMuhammadiyahLoaKulu" target="_blank" class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center hover:bg-yellow-500 hover:text-emerald-900 transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                        <a href="https://www.tiktok.com/@smp_mulk" target="_blank" class="w-10 h-10 rounded-full bg-emerald-800 flex items-center justify-center hover:bg-yellow-500 hover:text-emerald-900 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music-2"><circle cx="8" cy="18" r="4"/><path d="M12 18V2l7 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-lg font-bold mb-6 text-yellow-400">Navigasi Cepat</h3>
+                    <ul class="space-y-3 text-emerald-100">
+                        <li><a href="#beranda" class="hover:text-white hover:translate-x-2 transition-transform inline-block">Beranda</a></li>
+                        <li><a href="#profil" class="hover:text-white hover:translate-x-2 transition-transform inline-block">Profil Sekolah</a></li>
+                        <li><a href="#guru" class="hover:text-white hover:translate-x-2 transition-transform inline-block">Guru & Staff</a></li>
+                        <li><a href="#galeri" class="hover:text-white hover:translate-x-2 transition-transform inline-block">Galeri Kegiatan</a></li>
+                        <li><a href="#" onclick="openModal()" class="hover:text-white hover:translate-x-2 transition-transform inline-block">Info PPDB</a></li>
+                    </ul>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-lg font-bold mb-6 text-yellow-400">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-emerald-100">
+                        <li class="flex items-start gap-3"><i data-lucide="map-pin" class="w-5 h-5 mt-1 text-yellow-500 shrink-0"></i><span>Loa Kulu Kota, Kutai Kartanegara, Kaltim 75571</span></li>
+                        <li class="flex items-center gap-3"><i data-lucide="phone" class="w-5 h-5 text-yellow-500 shrink-0"></i><span>+62 838-5406-0950</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-emerald-800 pt-8 text-center text-emerald-300 text-sm">
+                <p>&copy; <span id="year"></span> SMP Muhammadiyah Loa Kulu. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PPDB Modal -->
+    <div id="ppdbModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm modal-backdrop" onclick="closeModal()"></div>
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border-t-4 border-yellow-500 modal-card-scale">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-2xl font-bold leading-6 text-emerald-800 mb-2 modal-stagger delay-100" id="modal-title">Formulir Pendaftaran PPDB</h3>
+                            <p class="text-sm text-gray-500 mb-6 modal-stagger delay-200">Silakan isi data awal di bawah ini atau hubungi panitia langsung via WhatsApp.</p>
+                            
+                            <form onsubmit="sendToWhatsapp(event)" class="space-y-4">
+                                <div class="modal-stagger delay-300">
+                                    <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap Siswa</label>
+                                    <input type="text" id="nama" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-gray-50 px-4 py-2 border" placeholder="Masukkan nama lengkap">
+                                </div>
+                                <div class="modal-stagger delay-300">
+                                    <label for="asal" class="block text-sm font-medium text-gray-700">Asal Sekolah (SD/MI)</label>
+                                    <input type="text" id="asal" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-gray-50 px-4 py-2 border" placeholder="Contoh: SD Negeri 001 Loa Kulu">
+                                </div>
+                                <div class="modal-stagger delay-500">
+                                    <label for="hp" class="block text-sm font-medium text-gray-700">Nomor HP / WhatsApp Ortu</label>
+                                    <input type="tel" id="hp" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-gray-50 px-4 py-2 border" placeholder="08xxxxxxxxxx">
+                                </div>
+                                <div class="modal-stagger delay-500">
+                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Domisili</label>
+                                    <textarea id="alamat" rows="2" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-gray-50 px-4 py-2 border" placeholder="Alamat lengkap"></textarea>
+                                </div>
+                                <div class="pt-4 flex flex-col gap-3 modal-stagger delay-700">
+                                    <button type="submit" class="w-full justify-center rounded-md bg-emerald-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 sm:w-auto transition-colors flex items-center gap-2 justify-center">
+                                        <i data-lucide="send" class="w-4 h-4"></i>
+                                        Kirim Data via WhatsApp
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Register Modal -->
+    <div id="loginModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm modal-backdrop" onclick="closeLoginModal()"></div>
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border-t-4 border-emerald-500 modal-card-scale">
+                <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="bg-white px-6 pb-6 pt-8">
+                    <div class="text-center mb-6 modal-stagger delay-100">
+                        <h3 class="text-2xl font-bold text-emerald-800" id="login-title">Masuk Akun</h3>
+                        <p class="text-sm text-gray-500 mt-1" id="login-subtitle">Silakan masuk ke akun Anda</p>
+                    </div>
+
+                    <!-- Google Auth Button -->
+                    <button id="googleLoginBtn" class="modal-stagger delay-200 w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg px-4 py-2.5 text-gray-700 font-medium hover:bg-gray-50 transition-colors mb-6 shadow-sm">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        Lanjutkan dengan Google
+                    </button>
+
+                    <div class="relative flex items-center justify-center mb-6 modal-stagger delay-300">
+                        <hr class="w-full border-gray-200">
+                        <span class="absolute bg-white px-3 text-sm text-gray-400">atau</span>
+                    </div>
+
+                    <form id="authForm" class="space-y-4 modal-stagger delay-400" onsubmit="handleEmailAuth(event)">
+                        <div id="nameField" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                            <input type="text" class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="Nama Anda">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="authEmail" required class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="email@contoh.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="authPassword" required class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="••••••••">
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-2" id="forgotPasswordDiv">
+                            <div class="flex items-center">
+                                <input type="checkbox" class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded">
+                                <label class="ml-2 block text-sm text-gray-700">Ingat saya</label>
+                            </div>
+                            <a href="#" class="text-sm font-medium text-emerald-600 hover:text-emerald-500">Lupa password?</a>
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-lg shadow-md transition-all mt-4" id="authSubmitBtn">
+                            Masuk
+                        </button>
+                    </form>
+
+                    <p class="mt-6 text-center text-sm text-gray-600 modal-stagger delay-500">
+                        <span id="authToggleText">Belum punya akun?</span>
+                        <button onclick="toggleAuthMode()" class="font-medium text-emerald-600 hover:text-emerald-500 ml-1" id="authToggleBtn">Daftar sekarang</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Teacher Modal -->
+    <div id="adminTeacherModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm modal-backdrop" onclick="closeAdminTeacherModal()"></div>
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border-t-4 border-emerald-600 modal-card-scale">
+                <button onclick="closeAdminTeacherModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="bg-white px-6 pb-6 pt-8">
+                    <div class="text-center mb-6 modal-stagger delay-100">
+                        <h3 class="text-2xl font-bold text-emerald-800">Tambah Guru/Staf</h3>
+                        <p class="text-sm text-gray-500 mt-1">Isi formulir untuk menambahkan data baru</p>
+                    </div>
+                    <form onsubmit="submitAdminTeacher(event)" class="space-y-4 modal-stagger delay-200">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                            <input type="text" id="teacherName" required class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="Nama Guru/Staf">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+                            <input type="text" id="teacherRole" required class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="Contoh: Guru MTK">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Foto URL (Opsional)</label>
+                            <input type="url" id="teacherPhotoUrl" class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="https://...">
+                        </div>
+                        <div class="relative flex items-center justify-center">
+                            <hr class="w-full border-gray-200">
+                            <span class="absolute bg-white px-3 text-xs text-gray-400">ATAU PILIH DARI PERANGKAT</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Foto</label>
+                            <input type="file" id="teacherPhotoFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-lg shadow-md transition-all mt-4">
+                            Simpan Data
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Gallery Modal -->
+    <div id="adminGalleryModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm modal-backdrop" onclick="closeAdminGalleryModal()"></div>
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border-t-4 border-emerald-600 modal-card-scale">
+                <button onclick="closeAdminGalleryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="bg-white px-6 pb-6 pt-8">
+                    <div class="text-center mb-6 modal-stagger delay-100">
+                        <h3 class="text-2xl font-bold text-emerald-800">Tambah Foto Galeri</h3>
+                        <p class="text-sm text-gray-500 mt-1">Masukkan URL foto atau pilih dari perangkat</p>
+                    </div>
+                    <form onsubmit="submitAdminGallery(event)" class="space-y-4 modal-stagger delay-200">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Foto URL (Opsional)</label>
+                            <input type="url" id="galleryPhotoUrl" class="w-full rounded-lg border-gray-300 bg-gray-50 border focus:ring-emerald-500 focus:border-emerald-500 px-4 py-2" placeholder="https://...">
+                        </div>
+                        <div class="relative flex items-center justify-center">
+                            <hr class="w-full border-gray-200">
+                            <span class="absolute bg-white px-3 text-xs text-gray-400">ATAU PILIH DARI PERANGKAT</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Foto</label>
+                            <input type="file" id="galleryPhotoFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-lg shadow-md transition-all mt-4">
+                            Tambahkan ke Galeri
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white/80 hover:text-white hover:scale-110 transition-all z-[101]" onclick="closeLightbox()">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <div class="relative max-w-7xl w-full h-full flex items-center justify-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Full Screen View" class="max-h-[90vh] max-w-full object-contain rounded-lg shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ once: true, duration: 800, offset: 100 });
+            lucide.createIcons();
+        });
+
+        // Navbar Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav', 'py-2');
+                navbar.classList.remove('bg-transparent', 'py-4');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-4');
+                navbar.classList.remove('glass-nav', 'py-2');
+            }
+        });
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+        // Modals
+        const modal = document.getElementById('ppdbModal');
+        function openModal() {
+            menu.classList.add('hidden');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.remove('modal-open');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300); 
+        }
+
+        const loginModal = document.getElementById('loginModal');
+        window.isLoginMode = true;
+        function openLoginModal() {
+            menu.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+            void loginModal.offsetWidth;
+            loginModal.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLoginModal() {
+            loginModal.classList.remove('modal-open');
+            setTimeout(() => {
+                loginModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function toggleAuthMode() {
+            window.isLoginMode = !window.isLoginMode;
+            const title = document.getElementById('login-title');
+            const subtitle = document.getElementById('login-subtitle');
+            const nameField = document.getElementById('nameField');
+            const forgotPasswordDiv = document.getElementById('forgotPasswordDiv');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const toggleText = document.getElementById('authToggleText');
+            const toggleBtn = document.getElementById('authToggleBtn');
+
+            if (window.isLoginMode) {
+                title.textContent = 'Masuk Akun';
+                subtitle.textContent = 'Silakan masuk ke akun Anda';
+                nameField.classList.add('hidden');
+                forgotPasswordDiv.classList.remove('hidden');
+                submitBtn.textContent = 'Masuk';
+                toggleText.textContent = 'Belum punya akun?';
+                toggleBtn.textContent = 'Daftar sekarang';
+            } else {
+                title.textContent = 'Daftar Akun Baru';
+                subtitle.textContent = 'Buat akun untuk melanjutkan';
+                nameField.classList.remove('hidden');
+                forgotPasswordDiv.classList.add('hidden');
+                submitBtn.textContent = 'Daftar';
+                toggleText.textContent = 'Sudah punya akun?';
+                toggleBtn.textContent = 'Masuk di sini';
+            }
+        }
+
+        // Auth Logic Handlers
+        function enableUserMode(username, avatarUrl) {
+            document.getElementById('loginBtnNav').classList.add('hidden');
+            document.getElementById('userProfileNav').classList.remove('hidden');
+            document.getElementById('userNameDisplay').textContent = username;
+            document.getElementById('userAvatarDisplay').src = avatarUrl;
+            
+            document.getElementById('loginBtnMobile').classList.add('hidden');
+            document.getElementById('userProfileMobile').classList.remove('hidden');
+            document.getElementById('userNameMobile').textContent = username;
+            document.getElementById('userAvatarMobile').src = avatarUrl;
+        }
+
+        function enableAdminMode() {
+            document.body.classList.add('admin-mode');
+            enableUserMode("Admin SMP", "https://i.ibb.co.com/CKdwjL1x/download.jpg");
+        }
+
+        function handleLogout() {
+            document.body.classList.remove('admin-mode');
+            document.getElementById('loginBtnNav').classList.remove('hidden');
+            document.getElementById('userProfileNav').classList.add('hidden');
+            
+            document.getElementById('loginBtnMobile').classList.remove('hidden');
+            document.getElementById('userProfileMobile').classList.add('hidden');
+            alert("Berhasil Logout!");
+        }
+
+        function handleEmailAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            
+            if (window.isLoginMode) {
+                if (email === "smpmuhlk@gmail.com" && password === "smpmuhlk123") {
+                    alert("Login Admin Berhasil!");
+                    enableAdminMode();
+                    closeLoginModal();
+                    return;
+                }
+                
+                alert("Login User Berhasil!");
+                const randomNum = Math.floor(Math.random() * 9000) + 1000;
+                enableUserMode("User_" + randomNum, `https://api.dicebear.com/7.x/bottts/svg?seed=${randomNum}`);
+                closeLoginModal();
+            } else {
+                alert("Registrasi Berhasil!");
+                closeLoginModal();
+            }
+        }
+
+        function adminDeleteElement(btn) {
+            if(confirm("Apakah Anda yakin ingin menghapus item ini?")) {
+                btn.closest('.group').remove();
+            }
+        }
+
+        const adminTeacherModal = document.getElementById('adminTeacherModal');
+        function openAdminTeacherModal() {
+            adminTeacherModal.classList.remove('hidden');
+            void adminTeacherModal.offsetWidth;
+            adminTeacherModal.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAdminTeacherModal() {
+            adminTeacherModal.classList.remove('modal-open');
+            setTimeout(() => {
+                adminTeacherModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function submitAdminTeacher(e) {
+            e.preventDefault();
+            const name = document.getElementById('teacherName').value;
+            const role = document.getElementById('teacherRole').value;
+            const urlInput = document.getElementById('teacherPhotoUrl').value;
+            const fileInput = document.getElementById('teacherPhotoFile');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    addTeacherCard(name, role, evt.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                addTeacherCard(name, role, urlInput || "https://i.ibb.co.com/CKdwjL1x/download.jpg");
+            }
+
+            closeAdminTeacherModal();
+            e.target.reset();
+        }
+
+        function addTeacherCard(name, role, imgUrl) {
+            const teacherGrid = document.getElementById('teacherGrid');
+            const newCard = document.createElement('div');
+            newCard.className = "bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative";
+            newCard.innerHTML = `
+                <button class="admin-only admin-delete-btn" onclick="adminDeleteElement(this)">Hapus</button>
+                <div class="h-80 overflow-hidden relative cursor-zoom-in" onclick="openLightbox('${imgUrl}')">
+                    <img src="${imgUrl}" alt="${name}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i data-lucide="maximize-2" class="text-white w-8 h-8 opacity-75"></i>
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-bold text-lg text-gray-900">${name}</h3>
+                    <p class="text-emerald-600 font-medium text-sm mt-1">${role}</p>
+                </div>
+            `;
+            teacherGrid.appendChild(newCard);
+            lucide.createIcons();
+        }
+
+        const adminGalleryModal = document.getElementById('adminGalleryModal');
+        function openAdminGalleryModal() {
+            adminGalleryModal.classList.remove('hidden');
+            void adminGalleryModal.offsetWidth;
+            adminGalleryModal.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAdminGalleryModal() {
+            adminGalleryModal.classList.remove('modal-open');
+            setTimeout(() => {
+                adminGalleryModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function submitAdminGallery(e) {
+            e.preventDefault();
+            const urlInput = document.getElementById('galleryPhotoUrl').value;
+            const fileInput = document.getElementById('galleryPhotoFile');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    addGalleryCard(evt.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if (urlInput) {
+                addGalleryCard(urlInput);
+            } else {
+                alert("Silakan masukkan URL atau pilih foto.");
+                return;
+            }
+
+            closeAdminGalleryModal();
+            e.target.reset();
+        }
+
+        function addGalleryCard(imgUrl) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const newCard = document.createElement('div');
+            newCard.className = "relative group overflow-hidden rounded-xl cursor-zoom-in gallery-item";
+            newCard.setAttribute('onclick', `openLightbox('${imgUrl}')`);
+            newCard.innerHTML = `
+                <button class="admin-only admin-delete-btn" onclick="event.stopPropagation(); adminDeleteElement(this)">Hapus</button>
+                <img src="${imgUrl}" alt="Galeri Baru" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
+                    <i data-lucide="maximize-2" class="text-white w-8 h-8 mb-2"></i>
+                </div>
+            `;
+            galleryGrid.appendChild(newCard);
+            lucide.createIcons();
+        }
+
+        function sendToWhatsapp(event) {
+            event.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const asal = document.getElementById('asal').value;
+            const hp = document.getElementById('hp').value;
+            const alamat = document.getElementById('alamat').value;
+            sendDataToWA(nama, asal, hp, alamat);
+            closeModal();
+        }
+        function sendInlineWhatsapp(event) {
+            event.preventDefault();
+            const nama = document.getElementById('inline-nama').value;
+            const asal = document.getElementById('inline-asal').value;
+            const hp = document.getElementById('inline-hp').value;
+            const alamat = document.getElementById('inline-alamat').value;
+            sendDataToWA(nama, asal, hp, alamat);
+        }
+        function sendDataToWA(nama, asal, hp, alamat) {
+            if (!nama || !asal || !hp || !alamat) return;
+            const message = `*Formulir Pendaftaran PPDB SMP Muhammadiyah Loa Kulu*%0A%0A` +
+                            `Nama Siswa: ${nama}%0AAsal Sekolah: ${asal}%0ANo. HP Ortu: ${hp}%0AAlamat: ${alamat}%0A%0A` +
+                            `Mohon informasi lebih lanjut mengenai pendaftaran.`;
+            window.open(`https://wa.me/6283854060950?text=${message}`, '_blank');
+        }
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(src) {
+            lightbox.classList.remove('hidden');
+            lightboxImg.src = src;
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => {
+                lightboxImg.classList.remove('scale-95', 'opacity-0');
+                lightboxImg.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+        function closeLightbox() {
+            lightboxImg.classList.remove('scale-100', 'opacity-100');
+            lightboxImg.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxImg.src = ''; 
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+                closeLoginModal();
+                closeAdminTeacherModal();
+                closeAdminGalleryModal();
+                closeLightbox();
+            }
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+      import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAeqP4EnR5MOHb51n061arwODvs1lU0RgQ",
+        authDomain: "smpmuhllk.firebaseapp.com",
+        projectId: "smpmuhllk",
+        storageBucket: "smpmuhllk.firebasestorage.app",
+        messagingSenderId: "924272615322",
+        appId: "1:924272615322:web:3d5b20ec9ada47cec06423",
+        measurementId: "G-SPGC1KY5S6"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+
+      const googleBtn = document.getElementById('googleLoginBtn');
+      if(googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          signInWithPopup(auth, provider)
+            .then((result) => {
+              const randomNum = Math.floor(Math.random() * 9000) + 1000;
+              const randomUsername = "User_" + randomNum;
+              const randomPhoto = `https://api.dicebear.com/7.x/bottts/svg?seed=${randomNum}`;
+              alert("Login Google Berhasil! Selamat datang " + randomUsername);
+              window.enableUserMode(randomUsername, randomPhoto);
+              window.closeLoginModal();
+            }).catch((error) => {
+              alert("Error Login Google: " + error.message);
+            });
+        });
+      }
+    </script>
+</body>
+</html>
